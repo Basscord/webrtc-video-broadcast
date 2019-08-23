@@ -9,8 +9,8 @@ socket.on('offer', function(id, description) {
 	.then(function () {
 		socket.emit('answer', id, peerConnection.localDescription);
 	});
-	peerConnection.onaddstream = function(event) {
-		video.srcObject = event.stream;
+	peerConnection.ontrack = function(event) {
+		video.srcObject = event.streams[0];
 	};
 	peerConnection.onicecandidate = function(event) {
 		if (event.candidate) {

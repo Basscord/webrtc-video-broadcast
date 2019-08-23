@@ -20,7 +20,8 @@ socket.on('answer', function(id, description) {
 socket.on('watcher', function(id) {
 	const peerConnection = new RTCPeerConnection(config);
 	peerConnections[id] = peerConnection;
-	peerConnection.addStream(video.srcObject);
+	let stream = video.srcObject;
+        stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
 	peerConnection.createOffer()
 	.then(sdp => peerConnection.setLocalDescription(sdp))
 	.then(function () {
